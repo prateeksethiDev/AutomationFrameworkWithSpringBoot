@@ -19,6 +19,8 @@ import org.testng.annotations.BeforeTest;
  * This class acts as a parent class for all the Test classes.
  * we are overriding the springTestContextPrepareTestInstance method of class AbstractTestNGSpringContextTests to resolve the 
  * webDriver dependency in @BeforeSuite annotated method.
+ * Also, this class is annotated with @SpringBootTest, which bootstrap the entire container. This will create a ApplicationContext 
+ * that will be utilized in our tests.
  *
  */
 @SpringBootTest
@@ -41,6 +43,7 @@ public class BaseTest extends AbstractTestNGSpringContextTests{
 	@Override
 	protected void springTestContextPrepareTestInstance() throws Exception {
 		super.springTestContextPrepareTestInstance();
+		System.out.println("Going to start Running Tests!! "+"\uD83D\uDE00");
 	}
 	
 }
