@@ -45,11 +45,6 @@ public class HomePage extends BasePage{
 		lnkLogin.click();
 	}
 	
-	public void getUrl(String url) {
-		webDriver.get(url);
-		webDriver.manage().window().maximize();
-	}
-	
 	public void clickLoginBtn() {
 		btnLogin.click();
 	}

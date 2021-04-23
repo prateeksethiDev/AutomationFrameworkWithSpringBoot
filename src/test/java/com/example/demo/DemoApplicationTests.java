@@ -1,16 +1,13 @@
 package com.example.demo;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
+import org.testng.annotations.Test;
 import com.pages.HomePage;
 import com.pages.LoginPage;
 
-@SpringBootTest
-@Profile("default")
-class DemoApplicationTests {
+
+class DemoApplicationTests extends BaseTest{
 	
 	@Autowired
 	private LoginPage loginPage;
@@ -18,10 +15,7 @@ class DemoApplicationTests {
 	@Autowired
 	private HomePage homePage;
 	
-	//String interpolation happens
-		@Value("${app.url}")
-		private String appUrl;
-		
+	//String interpolation happens		
 		@Value("${app.username}")
 		private String username;
 		
@@ -30,7 +24,6 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
-		homePage.getUrl(appUrl);
 		homePage.clickLoginLnk();
 		homePage.waitForLoginLableVisible();
 		homePage.enterUserName(username);
