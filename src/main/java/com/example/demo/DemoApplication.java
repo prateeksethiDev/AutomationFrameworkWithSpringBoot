@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.pages","com.libraries"})
+@ComponentScan({"com.test.framework","com.libraries"})
 public class DemoApplication {
 
 	public static void main(String[] args) {

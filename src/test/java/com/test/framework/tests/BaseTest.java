@@ -1,15 +1,22 @@
-package com.example.demo;
+package com.test.framework.tests;
 
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
+import org.springframework.lang.NonNull;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
+import com.test.framework.config.TestConfig;
+import com.test.framework.pages.BasePage;
 
+import org.testng.IHookCallBack;
+import org.testng.ITestResult;
 
 /**
  * 
@@ -23,27 +30,20 @@ import org.testng.annotations.BeforeTest;
  * that will be utilized in our tests.
  *
  */
-@SpringBootTest
-@Profile("default")
+@ContextConfiguration(classes = {TestConfig.class})
 public class BaseTest extends AbstractTestNGSpringContextTests{
 	
-	@Value("${app.url}")
-	private String appUrl;
-	
-	@Autowired
-	protected WebDriver webDriver;
-	
-	@BeforeTest
-	protected void setup() {
-		webDriver.get(appUrl);
-		webDriver.manage().window().maximize();
-	}
-	
-	@BeforeSuite(alwaysRun=true)
 	@Override
-	protected void springTestContextPrepareTestInstance() throws Exception {
-		super.springTestContextPrepareTestInstance();
-		System.out.println("Going to start Running Tests!! "+"\uD83D\uDE00");
-	}
-	
+    public void run(@NonNull IHookCallBack callBack, ITestResult testResult) {
+        String msg = "[BeforeTestExecution] Commencing to run " + testResult.getMethod().getQualifiedName()
+                     + "() on thread " + Thread.currentThread().getId();
+        System.err.println(msg);
+        WebDriver driver = applicationContext.getBean(WebDriver.class);
+        super.run(callBack, testResult);
+        driver.quit();
+    }
+
+    public final <T extends BasePage> T getPage(Class<T> type) {
+        return this.applicationContext.getBean(type);
+    }
 }
